@@ -5,13 +5,13 @@ language: c
 compiler: gcc
 env:
   global:
-    - PACKAGE=vcontrold
+  - PACKAGE=vcontrold
   matrix:
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/kirkwood/generic/OpenWrt-SDK-kirkwood-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/lantiq/xway/OpenWrt-SDK-lantiq-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ramips/rt305x/OpenWrt-SDK-ramips-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
-    - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ixp4xx/harddisk/OpenWrt-SDK-ixp4xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
+  - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
+  - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/kirkwood/generic/OpenWrt-SDK-kirkwood-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
+  - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/lantiq/xway/OpenWrt-SDK-lantiq-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
+  - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ramips/rt305x/OpenWrt-SDK-ramips-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
+  - SDK_URL=https://downloads.openwrt.org/barrier_breaker/14.07/ixp4xx/harddisk/OpenWrt-SDK-ixp4xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
 install:
 - mkdir -p $TRAVIS_BUILD_DIR/local ; cd $TRAVIS_BUILD_DIR/local
 - wget "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_3.1.6-1_amd64.deb"
@@ -34,15 +34,11 @@ script:
 - make V=s
 - find $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*/bin/
 - find . -name *controld_*.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
-before_deploy:
-  git fetch --tags
+before_deploy: git fetch --tags
 deploy:
   provider: releases
   api_key:
-    secure: jJBKTduvxWOc+0ANQJ3o+j+Pb71S2k2BbqqhyYvWZM40H8jW4euy4/NaLWYf5oNnF5YslmUtvK53m98sBpvu63sHNQ3vK/aoZEGMozFne76Z+PkgL3SZCr8ia/Un+IwEQ0C50FPGBa/osy583r2ajca0rKLlTN0M8zCTACCKm3w=
-  skip_cleanup: true
-  file_glob: true
+    secure: QliL8PcUFu1xRujxVQ1vWP8oJEy2BuKMamOEGYGYC4qmhbVRfRcHp2e3H/iB0dFkaWk033GM4na1yQiQPVjq+ocWggj/j54Y9C23OpuxEvfPQS5PadImz0jZfTIKoZWNdJSQlW5yTIX0p7jWvDUVxNTQrZ8Hk2cE9vWikPWr1b1qks92DLVVk7JwWxIMcXIiiNeuU/A+rmHPlx8pc10SJUFp/KqvPUROA/fvITaG7lrF20TCutACKytdu+jbZJToInrd1LPMm+mjVJbYOJX2HNkszCjR5NjlbNTcvqTC4QC0ZA8WBvEeUkhAXOmo2z7aE0/iH8/DF69AuA0ImjHf8HsxFnu0Y+eXXJZzsQTsrBb8+ejNVwtPHWu/aOKqp3YK/BhB9z59ULX/nhFekVnednBkCUgmHZWCrTkjLZ0RQw19S50M8mcOKzs9GRbqXC+GXMlAyh0TrImuzYp7lhLK/1MDtSSd6D3CY2upPcudPT1NWnNpMe5ojnZVzrdphszbF72YPAtDtN7so4Ep2UX8ar1e+GPAaNR21gQezXKvntYvPck4Tr/JuvYQVVaI8iuOWbEhKABx9Xljnk7c82hBCZh/q9wWd/9zpdSkzEI/Y3hxl5t2W93a4FwE1Higzalxhdop28xelbV5mNrpp1BFBp9mNVsrktaoUXKneZbZjjI=
   file: $TRAVIS_BUILD_DIR/*.ipk
   on:
-    tags: true
-    all_branches: true
+    repo: ttosch/vcontrold-for-openwrt
