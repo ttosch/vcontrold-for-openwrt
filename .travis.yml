@@ -42,3 +42,4 @@ deploy:
   file: $TRAVIS_BUILD_DIR/*.ipk
   on:
     repo: ttosch/vcontrold-for-openwrt
+    all_branches: true
